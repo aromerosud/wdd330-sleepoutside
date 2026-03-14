@@ -90,7 +90,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -121,6 +121,22 @@ button {
   padding-top: 1em;
   position: relative;
   text-align: center;
+}
+
+.cart-count {
+  position: absolute;
+  top: 4px;
+  right: -6px;
+  background: rgba(204, 137, 12, 0.836);
+  color: rgb(85, 13, 179);
+  font-size: 0.7rem;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart svg {
@@ -281,7 +297,7 @@ footer {
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .product-card img {
