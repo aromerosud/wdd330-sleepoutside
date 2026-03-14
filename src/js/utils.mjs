@@ -49,3 +49,18 @@ export async function loadHeaderFooter() {
   header.innerHTML = await headerResponse.text();
   footer.innerHTML = await footerResponse.text();
 }
+
+//Add a superscript number of items
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const countElement = qs(".cart-count");
+
+  if (!countElement) return;
+
+  if (cartItems.length > 0) {
+    countElement.textContent = cartItems.length;
+    countElement.style.display = "flex";
+  } else {
+    countElement.style.display = "none";
+  }
+}
