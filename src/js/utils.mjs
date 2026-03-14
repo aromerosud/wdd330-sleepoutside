@@ -38,3 +38,14 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export async function loadHeaderFooter() {
+  const header = qs("header");
+  const footer = qs("footer");
+
+  const headerResponse = await fetch("/partials/header.html");
+  const footerResponse = await fetch("/partials/footer.html");
+
+  header.innerHTML = await headerResponse.text();
+  footer.innerHTML = await footerResponse.text();
+}
