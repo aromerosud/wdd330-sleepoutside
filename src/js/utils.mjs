@@ -39,15 +39,26 @@ export function renderListWithTemplate(template, parentElement, list, position =
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if(callback) {
+    callback(data);
+  }
+}
+
 export async function loadHeaderFooter() {
-  const header = qs("header");
-  const footer = qs("footer");
 
   const headerResponse = await fetch("/partials/header.html");
   const footerResponse = await fetch("/partials/footer.html");
 
-  header.innerHTML = await headerResponse.text();
-  footer.innerHTML = await footerResponse.text();
+  const headerHTML = await headerResponse.text();
+  const footerHTML = await footerResponse.text();
+
+  const header = document.querySelector("#header");
+  const footer = document.querySelector("#footer");
+
+  renderWithTemplate(headerHTML, header);
+  renderWithTemplate(footerHTML, footer);
 }
 
 //Add a superscript number of items
@@ -63,4 +74,10 @@ export function updateCartCount() {
   } else {
     countElement.style.display = "none";
   }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
 }
