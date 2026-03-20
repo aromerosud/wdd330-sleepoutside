@@ -1,4 +1,4 @@
-import { getLocalStorage, updateCartCount, loadHeaderFooter} from "./utils.mjs";
+import { getLocalStorage, updateCartCount, loadHeaderFooter } from "./utils.mjs";
 
 loadHeaderFooter();
 
