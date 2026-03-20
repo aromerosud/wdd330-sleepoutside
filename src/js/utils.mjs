@@ -46,10 +46,11 @@ export function renderWithTemplate(template, parentElement, data, callback) {
   }
 }
 
+/*
 export async function loadHeaderFooter() {
 
-  const headerResponse = await fetch("/partials/header.html");
-  const footerResponse = await fetch("/partials/footer.html");
+  const headerResponse = await fetch("../partials/header.html");
+  const footerResponse = await fetch("../partials/footer.html");
 
   const headerHTML = await headerResponse.text();
   const footerHTML = await footerResponse.text();
@@ -59,6 +60,18 @@ export async function loadHeaderFooter() {
 
   renderWithTemplate(headerHTML, header);
   renderWithTemplate(footerHTML, footer);
+  
+}*/
+
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+
+  const headerElement = document.querySelector("#header");
+  const footerElement = document.querySelector("#footer");
+
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
 
   updateCartCount();
 }
