@@ -41,7 +41,7 @@ export function renderListWithTemplate(template, parentElement, list, position =
 
 export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.innerHTML = template;
-  if(callback) {
+  if (callback) {
     callback(data);
   }
 }
@@ -59,6 +59,8 @@ export async function loadHeaderFooter() {
 
   renderWithTemplate(headerHTML, header);
   renderWithTemplate(footerHTML, footer);
+
+  updateCartCount();
 }
 
 //Add a superscript number of items
