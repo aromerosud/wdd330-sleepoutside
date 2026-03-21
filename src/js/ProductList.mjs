@@ -29,10 +29,12 @@ export default class ProductList {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.products = [];
   }
 
   async init() {
     const list = await this.dataSource.getData(this.category);
+    this.products = list;
     this.renderList(list);
     document.querySelector(".title").textContent = this.category;
   }
@@ -42,8 +44,15 @@ export default class ProductList {
     // this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join(""));
 
     // apply use new utility function instead of the commented code above
-    renderListWithTemplate(productCardTemplate, this.listElement, list);
+    renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", true);
+  }
 
+  getRenderFunction() {
+    return (filteredProducts) => this.renderList(filteredProducts);
+  }
+
+  getProducts() {
+    return this.products;
   }
 
   /*async init() {
