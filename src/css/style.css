@@ -387,3 +387,7 @@ footer {
   width: 100%;
   border-radius: 6px;
 }
+
+.list-total {
+  display: none;
+}
