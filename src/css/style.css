@@ -388,6 +388,10 @@ footer {
   border-radius: 6px;
 }
 
-.list-total {
+.cart-footer {
+  text-align: center;
+}
+
+.hide {
   display: none;
 }

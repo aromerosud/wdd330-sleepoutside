@@ -32,4 +32,20 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
+document.addEventListener("DOMContentLoaded", function (){
+  const listFooter = document.querySelector(".list-footer");
+  const cartFooter = document.querySelector(".cart-footer");
+  const cartTotal = document.querySelector(".cart-total");
+
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  if(cartItems.length > 0) {
+    listFooter.classList.remove("hide");
+    cartFooter.classList.remove("hide");
+
+  let total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice), 0);
+  cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+  }
+});
+
 renderCartContents();
