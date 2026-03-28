@@ -15,3 +15,9 @@ listing.init().then(() => {
   const searchFilter = new SearchFilter("#product-search", listing.getRenderFunction());
   searchFilter.setProducts(listing.getProducts());
 });
+
+const sortSelect = document.getElementById("sortOptions");
+
+sortSelect.addEventListener("change", (e) => {
+  listing.sortProducts(e.target.value);
+});

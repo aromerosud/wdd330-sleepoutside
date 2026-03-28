@@ -55,6 +55,38 @@ export default class ProductList {
     return this.products;
   }
 
+  sortProducts(criteria) {
+    let sorted = [...this.products];
+
+    switch (criteria) {
+      case "name-asc":
+        sorted.sort((a, b) =>
+          a.Name.localeCompare(b.Name)
+        );
+        break;
+
+      case "name-desc":
+        sorted.sort((a, b) =>
+          b.Name.localeCompare(a.Name)
+        );
+        break;
+
+      case "price-asc":
+        sorted.sort((a, b) =>
+          a.FinalPrice - b.FinalPrice
+        );
+        break;
+
+      case "price-desc":
+        sorted.sort((a, b) =>
+          b.FinalPrice - a.FinalPrice
+        );
+        break;
+    }
+
+    this.renderList(sorted);
+  }
+
   /*async init() {
     const list = await this.dataSource.getData(this.category);
 
