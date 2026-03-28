@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -15,7 +15,6 @@ function formDataToJSON(formElement) {
 
 function packageItems(items) {
   const simplifiedItems = items.map((item) => {
-    console.log(item);
     return {
       id: item.Id,
       price: item.FinalPrice,
@@ -83,20 +82,40 @@ export default class CheckoutProcess {
 
   async checkout() {
     const formElement = document.forms["checkout"];
+    
+    // Set orderDate in hidden field
+    const orderDate = new Date().toISOString();
+    document.querySelector("#orderDate").value = orderDate;
+    
     const order = formDataToJSON(formElement);
 
-    order.orderDate = new Date().toISOString();
-    order.orderTotal = this.orderTotal;
-    order.tax = this.tax;
+    // Format totals as strings with 2 decimal places
+    order.orderTotal = this.orderTotal.toFixed(2);
+    order.tax = this.tax.toFixed(2);
     order.shipping = this.shipping;
     order.items = packageItems(this.list);
-    //console.log(order);
 
     try {
+      // Attempt to submit the order
       const response = await services.checkout(order);
-      console.log(response);
+      
+      // Success - handle the happy path
+      console.log("Order placed successfully:", response);
+      
+      setLocalStorage("so-cart", []);
+      
+      window.location.href = `./success.html?orderId=${response.orderId}`;
+      
     } catch (err) {
-      console.log(err);
+      // Error - handle the unhappy path
+      console.error("Checkout failed:", err);
+      
+      // Display error message to user using custom alert
+      if (err.name === 'servicesError') {
+        alertMessage(err.message, true, 'error');
+      } else {
+        alertMessage("An unexpected error occurred. Please try again.", true, 'error');
+      }
     }
   }
 }

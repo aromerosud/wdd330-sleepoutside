@@ -96,3 +96,47 @@ export async function loadTemplate(path) {
   const template = await res.text();
   return template;
 }
+
+export function alertMessage(message, scroll = true, type = 'error') {
+  // Remove any existing alerts first
+  const existingAlert = document.querySelector('.alert-message');
+  if (existingAlert) {
+    existingAlert.remove();
+  }
+
+  const alertDiv = document.createElement('div');
+  alertDiv.className = `alert-message alert-${type}`;
+
+  let messageContent = '';
+  
+  if (typeof message === 'object') {
+    messageContent = '<ul>';
+    Object.entries(message).forEach(([key, value]) => {
+      const fieldName = key.charAt(0).toUpperCase() + key.slice(1);
+      messageContent += `<li><strong>${fieldName}:</strong> ${value}</li>`;
+    });
+    messageContent += '</ul>';
+  } else {
+    messageContent = `<p>${message}</p>`;
+  }
+
+  alertDiv.innerHTML = `
+    <div class="alert-content">
+      ${messageContent}
+      <button class="alert-close" type="button" aria-label="Close alert">&times;</button>
+    </div>
+  `;
+
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    mainElement.insertAdjacentElement('afterbegin', alertDiv);
+  }
+
+  alertDiv.querySelector('.alert-close').addEventListener('click', () => {
+    alertDiv.remove();
+  });
+
+  if (scroll) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
